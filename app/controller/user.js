@@ -47,9 +47,8 @@ class UserController extends CommonController {
   }
   // 发送邮箱验证码
   async setEmail() {
-    // const { ctx } = this;
-    // const email = ctx.query.email;
-    const email = '1427690917@qq.com';
+    const { ctx } = this;
+    const email = ctx.query.email;
     const emailCode = Math.random().toString().slice(2, 6);
 
     console.log('邮件' + email + '验证码是' + emailCode);

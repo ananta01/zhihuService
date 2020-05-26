@@ -5,9 +5,9 @@
  */
 module.exports = app => {
   const { router, controller } = app;
-  router.get('/topSearchList', controller.home.getSearchList);
+  router.get('/api/topSearchList', controller.home.getSearchList);
 
-  router.post('/user/register', controller.user.register);
-  router.get('/user/email', controller.user.setEmail);
-  router.get('/user/captcha', controller.user.setCaptcha);
+  router.post('/api/user/register', controller.user.register);
+  router.get('/api/user/email', controller.user.setEmail);
+  router.get('/api/user/captcha', controller.user.setCaptcha);
 };

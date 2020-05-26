@@ -20,11 +20,11 @@ class ToolsService extends Service {
   captcha() {
     return svgCaptcha.create({
       size: 4,
-      fontSize: 50,
+      fontSize: 60,
       color: true,
-      noise: 6,
-      width: 100,
-      height: 40,
+      noise: 4,
+      width: 200,
+      height: 50,
     });
   }
   // 发送邮件码

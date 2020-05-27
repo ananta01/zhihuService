@@ -17,10 +17,10 @@ class CommonController extends Controller {
       data,
     };
   }
-  error(message, code = 400) {
+  error(data, code = 400) {
     this.ctx.body = {
       code,
-      message,
+      data,
     };
   }
 }

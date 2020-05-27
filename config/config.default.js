@@ -1,6 +1,7 @@
 /* eslint valid-jsdoc: "off" */
 
 'use strict';
+const { db, jwtSecret } = require('../app/config/config')
 
 /**
  * @param {Egg.EggAppInfo} appInfo app info
@@ -18,14 +19,7 @@ module.exports = appInfo => {
   // add your middleware config here
   config.middleware = [];
 
-  config.sequelize = {
-    dialect: 'mysql',
-    host: '127.0.0.1',
-    port: 3306,
-    database: 'zhihu',
-    username: 'root',
-    password: 'root',
-  };
+  config.sequelize = db;
 
   // add your user config here
   const userConfig = {
@@ -35,5 +29,8 @@ module.exports = appInfo => {
   return {
     ...config,
     ...userConfig,
+    jwt: {
+      secret: jwtSecret,
+    },
   };
 };

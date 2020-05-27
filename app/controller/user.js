@@ -10,14 +10,10 @@ class UserController extends CommonController {
   // 注册账号
   async register() {
     const { ctx } = this;
-    const { email, password, emailCode, captcha, nickname } = ctx.request.body;
+    const { email, password, emailCode, nickname } = ctx.request.body;
 
     if (emailCode !== ctx.session.emailCode) {
       return this.error('请输入正确的邮箱验证码');
-    }
-
-    if (captcha.toLowerCase() !== ctx.session.captcha.toLowerCase()) {
-      return this.error('请输入正确的验证码');
     }
 
     if (this.checkEmail(email)) {
@@ -65,6 +61,49 @@ class UserController extends CommonController {
     } else {
       this.error('发送失败，请检查邮箱');
     }
+  }
+  // 登录
+  async login() {
+    const { ctx, app } = this;
+    const { email, password, captcha } = ctx.request.body;
+
+    if (captcha.toLowerCase() !== ctx.session.captcha.toLowerCase()) {
+      return this.error('请输入正确的验证码');
+    }
+
+    if (!this.checkEmail(email)) {
+      return this.error('该邮箱暂未注册');
+    }
+
+    const user = await ctx.model.User.findOne({
+      where: {
+        email,
+        password: md5(password),
+      },
+    });
+    console.log(user);
+
+    if (user) {
+      const { nickname, id } = user;
+      const token = app.jwt.sign({
+        nickname,
+        email,
+        id,
+      }, app.config.jwt.secret, {
+        expiresIn: '60s',
+      });
+      this.success({ token });
+    } else {
+      this.error('邮箱或密码错误');
+    }
+
+  }
+  // 根据token解析用户信息
+  async info() {
+    const { ctx } = this
+    const user = await this.checkEmail(ctx.state.email)
+    this.success(user);
+    console.log('info' + user);
   }
 }
 

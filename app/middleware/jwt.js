@@ -2,8 +2,8 @@
 
 module.exports = ({ app }) => {
   return async function verify(ctx, next) {
-    const token = ctx.request.header.authorization.replace('Bearer ', '');
     try {
+      const token = ctx.request.header.authorization.replace('Bearer ', '');
       const ret = await app.jwt.verify(token, app.config.jwt.secret);
       console.log('中间件获取token信息', ret);
       ctx.state.email = ret.email;

@@ -11,4 +11,5 @@ module.exports = {
   userEmail: '876409765@qq.com',
   userEmailPaw: 'zlkhcpwauyecbfib',
   jwtSecret: 'anantajwt',
+  loginTokenExpire: '1h',
 };

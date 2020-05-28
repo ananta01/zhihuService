@@ -21,6 +21,12 @@ module.exports = appInfo => {
 
   config.sequelize = db;
 
+  config.security = {
+    csrf: {
+      enable: false,
+    },
+  };
+
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
